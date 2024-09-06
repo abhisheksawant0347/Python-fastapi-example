@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image 
       run: |
-         docker buildx build --platform=linux/amd64 -t pythontestrepo.azurecr.io/python-test:latest-amd64
-         # docker build . -t pythontestrepo.azurecr.io/python-test:latest
+         #docker buildx build --platform=linux/amd64 -t pythontestrepo.azurecr.io/python-test:latest-amd64
+         docker build . -t pythontestrepo.azurecr.io/python-test:latest
          docker images
          
     - uses: azure/docker-login@v1
@@ -27,7 +27,7 @@ jobs:
 
     - name: Push docker image to ACR repo.
       run: |
-         #docker push pythontestrepo.azurecr.io/python-test:latest
+         
           docker push pythontestrepo.azurecr.io/python-test:latest-amd64
     
       
