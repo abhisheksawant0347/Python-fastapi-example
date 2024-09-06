@@ -26,6 +26,6 @@ jobs:
 
     - name: Push docker image to ACR repo.
       run: |
-          docker push pythontestrepo.azurecr.io/python-test:latest
+          docker push pythontestrepo.azurecr.io/python-test:latest1
     
       
