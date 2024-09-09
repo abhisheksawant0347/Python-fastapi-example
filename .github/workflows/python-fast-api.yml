@@ -43,6 +43,8 @@ jobs:
       run: |
           pwd 
           ls -la
+          cd ..
+          ls -la
           kubectl apply -f deployment.yml 
           kubectl get pods
           kubectl get svc
