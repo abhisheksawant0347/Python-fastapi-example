@@ -9,10 +9,10 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     env:
-      ARM_CLIENT_ID: ${{secrects.ARM_CLIENT_ID}}
-      ARM_CLIENT_SECRECT: ${{secrects.ARM_CLIENT_SECRECT}}
-      ARM_SUBSCRIPTION_ID: ${{secrects.ARM_SUBSCRIPTION_ID}}
-      ARM_TENANT_ID: ${{secrects.ARM_TENANT_ID}}
+      ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+      ARM_CLIENT_SECRECT: ${{secrets.ARM_CLIENT_SECRECT}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
     steps:
       - uses: actions/checkout@v2
       
