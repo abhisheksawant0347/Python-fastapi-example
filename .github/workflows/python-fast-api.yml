@@ -41,6 +41,8 @@ jobs:
     
     - name: Deploy to AKS Cluster
       run: |
+          pwd 
+          ls -la
           kubectl apply -f deployment.yml 
           kubectl get pods
           kubectl get svc
