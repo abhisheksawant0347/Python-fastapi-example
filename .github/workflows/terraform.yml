@@ -3,7 +3,7 @@ name: terraform infra provisiong
 on:
   push:
     branches: 
-      - infra1
+      - infra
 
 jobs:
   terraform:
