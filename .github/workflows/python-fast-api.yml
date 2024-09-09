@@ -6,11 +6,9 @@ on:
       - main
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image 
@@ -27,5 +25,23 @@ jobs:
     - name: Push docker image to ACR repo.
       run: |
           docker push pythontestrepo.azurecr.io/python-test:latest1
-    
+
+  Deploy:
+   needs: build
+   runs-on: ubuntu-latest
+   steps:
+    - name: Set AKS account
+      run: |
+       az account set --subscription ${{ secrets.SUBSCRIPTION }}
+       az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
+       
+    - name: Setup kubectl
+      id: install-kubectl
+      uses: azure/setup-kubectl@v3
       
+    - name: Deploy to AKS Cluster
+      run: |
+          kubectl apply -f deployment.yml 
+          kubectl get pods
+          kubectl get svc
+            
