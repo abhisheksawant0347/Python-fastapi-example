@@ -1,0 +1,34 @@
+name: terraform infra provisiong
+
+on:
+  push:
+    branches: 
+      - infra1
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+	env:
+	  ARM_CLIENT_ID: ${{secrects.ARM_CLIENT_ID}}
+	  ARM_CLIENT_SECRECT: ${{secrects.ARM_CLIENT_SECRECT}}
+	  ARM_SUBSCRIPTION_ID: ${{secrects.ARM_SUBSCRIPTION_ID}}
+	  ARM_TENANT_ID: ${{secrects.ARM_TENANT_ID}}
+
+  steps:
+  - uses: actions/checkout@v2
+	
+  - name: Setup terraform
+    uses: hashicorp/setup-terraform@v1
+	  
+	- name: Terraform Init
+	  run: terraform int
+	  
+	- name: Terraform plan
+	  run: terraform plan
+	  
+	
+	  
+	  
+  
+    
+      
