@@ -30,6 +30,7 @@ jobs:
    needs: build
    runs-on: ubuntu-latest
    steps:
+    - uses: actions/checkout@v4
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
       
@@ -42,9 +43,6 @@ jobs:
     - name: Deploy to AKS Cluster
       run: |
           pwd 
-          ls -la
-          cd ..
-          ls -la
           kubectl apply -f deployment.yml 
           kubectl get pods
           kubectl get svc
