@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: python-test
-        image: pythontestrepo.azurecr.io/python-test:latest1
+        image: pythontestrepo.azurecr.io/python-test:latest
         ports:
         - containerPort: 80
 ---
