@@ -34,6 +34,12 @@ jobs:
   Deploy:
    needs: build
    runs-on: ubuntu-latest
+   env:
+      CLIENT_ID: ${{secrets.CLIENT_ID}}
+      CLIENT_SECRECT: ${{secrets.CLIENT_SECRECT}}
+      SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID}}
+      TENANT_ID: ${{secrets.TENANT_ID}}
+      
    steps:
     - uses: actions/checkout@v4
     - name: Setup kubectl
@@ -41,27 +47,27 @@ jobs:
       
     - name: 'Az CLI Login'
       uses: azure/login@v2
-   #   with:
-   #     ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-   #     ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-   #     ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-   #     ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-
-   # - name: Set AKS cluster connect
-   #   run: |
-   #    az account set --subscription ${{ secrets.SUBSCRIPTION }}
-   #    az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
-
-    #- uses: Azure/aks-set-context@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        cluster-name: kubernetes-test-env
-        resource-group: python-test-rg
-        
+        ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+
     - name: Set AKS cluster connect
       run: |
-        az account set --subscription ${{ secrets.SUBSCRIPTION }}
-        az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
+       az account set --subscription ${{ secrets.SUBSCRIPTION }}
+       az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
+
+    #- uses: Azure/aks-set-context@v1
+    #  with:
+    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+    #    cluster-name: kubernetes-test-env
+    #    resource-group: python-test-rg
+        
+    #- name: Set AKS cluster connect
+    #  run: |
+    #    az account set --subscription ${{ secrets.SUBSCRIPTION }}
+    #    az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
     
     - name: Deploy to AKS Cluster
       run: |
