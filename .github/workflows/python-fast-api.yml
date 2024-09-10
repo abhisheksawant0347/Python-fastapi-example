@@ -40,7 +40,7 @@ jobs:
       with:
          registry: ghcr.io
          username: abhisheksawant0347
-         password: ${{secrets.GITHUB_TOKEN}}
+         password: ${{secrets.SECRET_GITHUB}}
          
     - uses: actions/checkout@v4
     - name: Build the Docker image 
