@@ -37,18 +37,24 @@ jobs:
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
       
-    - name: 'Az CLI Login'
-      uses: azure/login@v2
-      with:
-        ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+   # - name: 'Az CLI Login'
+   #   uses: azure/login@v2
+   #   with:
+   #     ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+   #     ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+   #     ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+   #     ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
 
-    - name: Set AKS cluster connect
-      run: |
-       az account set --subscription ${{ secrets.SUBSCRIPTION }}
-       az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
+   # - name: Set AKS cluster connect
+   #   run: |
+   #    az account set --subscription ${{ secrets.SUBSCRIPTION }}
+   #    az aks get-credentials --resource-group python-test-rg --name kubernetes-test-env
+
+    - uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: kubernetes-test-env
+        resource-group: python-test-rg
     
     - name: Deploy to AKS Cluster
       run: |
@@ -58,6 +64,7 @@ jobs:
           kubectl get svc
           sleep 1m
           kubectl get svc
+          
     - name: deploy the app
       run: |
          echo 'Application is deployed'
