@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build_push_ACR:
     runs-on: ubuntu-latest
     
     steps:
@@ -30,9 +30,27 @@ jobs:
     - name: Push docker image to ACR repo.
       run: |
           docker push pythontestrepo.azurecr.io/python-test:latest
+  
+  build_push_GHCR:
+    runs-on: ubuntu-latest
+    needs: build_push_ACR
+    steps:
+    - name: 'Login to GitHub Container Registry'
+      uses: docker/login-action@v1
+      with:
+         registry: ghcr.io
+         username: abhisheksawant0347
+         password: ${{secrets.GITHUB_TOKEN}}
+         
+    - uses: actions/checkout@v4
+    - name: Build the Docker image 
+      run: |
+         docker build . --tag ghcr.io/abhisheksawant0347/python-app-test:latest
+         docker push ghcr.io/abhisheksawant0347/python-app-test:latest
+         docker images
 
   Deploy:
-   needs: build
+   needs:  build_push_GHCR
    runs-on: ubuntu-latest
    env:
       CLIENT_ID: ${{secrets.CLIENT_ID}}
