@@ -9,4 +9,4 @@ app = FastAPI(
 
 @app.get("/")
 def hello_world():
-    return {"Hello World - This is Test app 1"}
+    return {"Hello World - This is Test app 2"}
